@@ -1,0 +1,23 @@
+<input type="text" id="answerInput" />
+<button onclick="saveAnswer()">Сохранить</button>
+
+<script>
+function saveAnswer() {
+  var answer = document.getElementById('answerInput').value;
+  
+  fetch('save.php', {
+    method: 'POST',
+    body: JSON.stringify({ answer: answer })
+  })
+  .then(function(response) {
+    if (response.ok) {
+      console.log('Данные успешно сохранены на сервере.');
+    } else {
+      console.log('Произошла ошибка при сохранении данных.');
+    }
+  })
+  .catch(function(error) {
+    console.log('Произошла ошибка при выполнении запроса:', error.message);
+  });
+}
+</script>
