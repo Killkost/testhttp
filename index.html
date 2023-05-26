@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Сохранение текста на сервере</title>
+  <title>Сохранение текста на клиенте</title>
 </head>
 <body>
   <input type="text" id="text-input" placeholder="Введите текст">
@@ -10,29 +10,11 @@
   <script>
     function saveText() {
       const text = document.getElementById('text-input').value;
-
-      // Создание XMLHttpRequest объекта
-      const xhr = new XMLHttpRequest();
-
-      // Формирование GET запроса на сохранение текста
-      const url = '/saveText?text=' + encodeURIComponent(text);
-
-      // Настройка запроса
-      xhr.open('GET', url, true);
-
-      // Отправка запроса
-      xhr.send();
-
-      // Обработка ответа
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-            alert('Текст успешно сохранен');
-          } else {
-            alert('Ошибка при сохранении текста');
-          }
-        }
-      };
+      
+      // Сохранение текста в локальном хранилище
+      localStorage.setItem('savedText', text);
+      
+      alert('Текст успешно сохранен');
     }
   </script>
 </body>
