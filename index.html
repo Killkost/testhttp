@@ -1,23 +1,40 @@
-<input type="text" id="answerInput" />
-<button onclick="saveAnswer()">Сохранить</button>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Сохранение текста на сервере</title>
+</head>
+<body>
+  <input type="text" id="text-input" placeholder="Введите текст">
+  <button onclick="saveText()">Сохранить</button>
 
-<script>
-function saveAnswer() {
-  var answer = document.getElementById('answerInput').value;
-  
-  fetch('save.php', {
-    method: 'POST',
-    body: JSON.stringify({ answer: answer })
-  })
-  .then(function(response) {
-    if (response.ok) {
-      console.log('Данные успешно сохранены на сервере.');
-    } else {
-      console.log('Произошла ошибка при сохранении данных.');
+  <script>
+    function saveText() {
+      const text = document.getElementById('text-input').value;
+
+      // Создание XMLHttpRequest объекта
+      const xhr = new XMLHttpRequest();
+
+      // Формирование GET запроса на сохранение текста
+      const url = '/saveText?text=' + encodeURIComponent(text);
+
+      // Настройка запроса
+      xhr.open('GET', url, true);
+
+      // Отправка запроса
+      xhr.send();
+
+      // Обработка ответа
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            alert('Текст успешно сохранен');
+          } else {
+            alert('Ошибка при сохранении текста');
+          }
+        }
+      };
     }
-  })
-  .catch(function(error) {
-    console.log('Произошла ошибка при выполнении запроса:', error.message);
-  });
-}
-</script>
+  </script>
+</body>
+</html>
+
